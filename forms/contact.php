@@ -1,41 +1,52 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+	  // use PHPMailer\PHPMailer\PHPMailer;
+    // use PHPMailer\PHPMailer\Exception;
+    
+    // require '../assets/vendor/autoload.php'; // Include PHPMailer autoloader
+    
+    // $mail = new PHPMailer(true);
+    
+    // try {
+    //   if (isset($_POST["submit"])) {
+    //     $name = $_POST['name'];
+    //     $email = $_POST['email'];
+    //     $message = $_POST['message'];
+    //     $subject = $_POST['subject'];
+    //     // SMTP configuration
+    //     $mail->isSMTP();
+    //     $mail->Host = 'smtp.googlemail.com';
+    //     $mail->SMTPAuth = true;
+    //     $mail->Username = 'bitm-f19-024@superior.edu.pk';
+    //     $mail->Password = 'arslan123';
+    //     $mail->SMTPSecure = 'tls';
+    //     $mail->Port = 587;
+    
+    //     // Sender and recipient
+    //     $mail->setFrom('bitm-f19-024@superior.edu.pk', 'Arsalan Arif');
+    //     $mail->addAddress($email, $name);
+    
+    //     // Email content
+    //     $mail->isHTML(true);
+    //     $mail->Subject = $subject;
+    //     $mail->Body = $message;
+    
+    //     // Send email
+    //     $mail->send();
+    //     echo 'Email sent successfully';
+    //   }
+    // } catch (Exception $e) {
+    //     echo 'Email could not be sent. Error: ', $mail->ErrorInfo;
+    // }
+    $to = $_POST["email"]; // Replace with the recipient's email address
+    $subject = $_POST["subject"] . "(" . $_POST["name"] . ")";
+    $message = $_POST["message"];
+    $headers = "From: muhammadarsalan1432@gmail.com"; // Replace with your email address
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'muhammadarsalan1432@gmail.com';
-
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
-
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
-
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
-
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
-
-  echo $contact->send();
+    // Send email
+    if (mail($to, $subject, $message, $headers)) {
+        echo "Email sent successfully!";
+        // header("Location: https://m-arsalan1432.github.io/arsalanporfolio.github.io/index.html");
+    } else {
+        echo "Email delivery failed.";
+    }
 ?>
